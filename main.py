@@ -46,3 +46,19 @@ def get_messages():
     # sorted_chat = sorted(single_chat, key=lambda x: x["id"])
 
     return allChats
+
+
+@app.get("/chats")
+def get_chats():
+    res = supabase.table("chats").select("*").eq("user_id",23).execute()
+
+    return res.data
+
+
+@app.get("/messages/{id}")
+def get_chats(id:int):
+    res = supabase.table("messages").select("*").eq("user_id", id).execute()
+
+    single_chat = res.data
+    sorted_chat = sorted(single_chat, key=lambda x: x["id"])
+    return sorted_chat
